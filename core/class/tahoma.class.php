@@ -239,22 +239,9 @@ class tahoma extends eqLogic {
 						if ($module->controllableName == "io:RollerShutterVeluxIOComponent") {
 							// Velux IO
 						}
-
 						if ($module->controllableName == "io:RollerShutterWithLowSpeedManagementIOComponent") {
-							// RS Confort with feather mode
-							if ($command->commandName == "setClosureAndLinearSpeed") {
-								log::add('tahoma', 'debug', "Add Feather Command");
-								$tahomaCmd->setType('action');
-								$tahomaCmd->setIsVisible(0);
-								$tahomaCmd->setSubType('slider');
-								$tahomaCmd->setConfiguration('request', 'closure');
-								$tahomaCmd->setConfiguration('parameters', '#slider#,"lowspeed"');
-								$tahomaCmd->setConfiguration('minValue', '0');
-								$tahomaCmd->setConfiguration('maxValue', '100');
-								$tahomaCmd->setDisplay('generic_type', 'FLAP_SLIDER');
-							}
+						 	// RS Confort with feather mode
 						}
-
 						if ($module->controllableName == "rts:OnOffRTSComponent") {
 							// Prise On-Off
 						}
@@ -270,17 +257,24 @@ class tahoma extends eqLogic {
 						if ($command->commandName == "setClosure") {
 							$tahomaCmd->setType('action');
 							$tahomaCmd->setIsVisible(0);
-
 							$tahomaCmd->setSubType('slider');
 							$tahomaCmd->setConfiguration('request', 'closure');
 							$tahomaCmd->setConfiguration('parameters', '#slider#');
 							$tahomaCmd->setConfiguration('minValue', '0');
 							$tahomaCmd->setConfiguration('maxValue', '100');
 							$tahomaCmd->setDisplay('generic_type', 'FLAP_SLIDER');
+						} else if ($command->commandName == "setClosureAndLinearSpeed") {
+							$tahomaCmd->setType('action');
+							$tahomaCmd->setIsVisible(0);
+							$tahomaCmd->setSubType('slider');
+							$tahomaCmd->setConfiguration('request', 'closure');
+							$tahomaCmd->setConfiguration('parameters', '#slider#,lowspeed');
+							$tahomaCmd->setConfiguration('minValue', '0');
+							$tahomaCmd->setConfiguration('maxValue', '100');
+							$tahomaCmd->setDisplay('generic_type', 'FLAP_SLIDER');
 						} else if ($command->commandName == "setOrientation") {
 							$tahomaCmd->setType('action');
 							$tahomaCmd->setIsVisible(0);
-
 							$tahomaCmd->setSubType('slider');
 							$tahomaCmd->setConfiguration('request', 'orientation');
 							$tahomaCmd->setConfiguration('parameters', '#slider#');
@@ -342,7 +336,6 @@ class tahoma extends eqLogic {
 
 						if ($useCmd) {
 							$tahomaCmd->setName($command->commandName);
-							//   $tahomaCmd->setLogicalId('on');
 							$tahomaCmd->setEqLogic_id($eqLogic->getId());
 							$tahomaCmd->setConfiguration('deviceURL', $module->deviceURL);
 							$tahomaCmd->setConfiguration('commandName', $command->commandName);
@@ -365,7 +358,6 @@ class tahoma extends eqLogic {
 				$tahomaCmd->save();
 				/***********************************/
 				//Infos
-				//foreach ($module->definition->states as $state) {
 				foreach ($module->states as $state) {
 
 					$tahomaCmd = new tahomaCmd();
@@ -416,14 +408,16 @@ class tahoma extends eqLogic {
 
 					$linkedCmdName = '';
 					switch ($state->name) {
-					//if ($state->name == "core:ClosureState") {
 					case 'core:ClosureState':
 						$linkedCmdName = 'setClosure';
-
 						$tahomaCmd->setDisplay('generic_type', 'FLAP_STATE');
 						$tahomaCmd->save();
 						break;
-
+					case 'core:setClosureAndLinearSpeed':
+						$linkedCmdName = 'setClosureAndLinearSpeed';
+						$tahomaCmd->setDisplay('generic_type', 'FLAP_STATE');
+						$tahomaCmd->save();
+						break;
 					case 'core:SlateOrientationState':
 						$linkedCmdName = 'setOrientation';
 						break;
@@ -511,7 +505,7 @@ class tahoma extends eqLogic {
 
 		foreach ($eqLogics as $eqLogic) {
 			// Recherche le module 'ActionGroups'
-			log::add('tahoma', 'debug', "eqlabel: " . $eqLogic->getConfiguration('deviceURL') . " type: " . $eqLogic->getConfiguration('type'));
+			log::add('tahoma', 'debug', "eqlabel: " . $eqLogic->getConfiguration('deviceURL'));
 
 			if ($eqLogic->getConfiguration('deviceURL') == "ActionGroups") {
 				$eqLogic_found = $eqLogic;
