@@ -231,7 +231,7 @@ class tahoma extends eqLogic {
 						$tahomaCmd = new tahomaCmd();
 
 						$useCmd = true;
-						
+
 						if ($module->controllableName == "io:RollerShutterGenericIOComponent") {
 							// Store
 						}
@@ -242,22 +242,15 @@ class tahoma extends eqLogic {
 
 						if ($module->controllableName == "io:RollerShutterWithLowSpeedManagementIOComponent") {
 							// RS Confort with feather mode
-							if ($command->commandName == "open_feather") {
+							if ($command->commandName == "setClosureAndLinearSpeed") {
 								$tahomaCmd->setType('action');
-								$tahomaCmd->setSubType('other');
-								$tahomaCmd->setDisplay('icon', '<i class="fa fa-arrow-up"></i>');
-								$tahomaCmd->setDisplay('generic_type', 'FLAP_UP');
-							} else if ($command->commandName == "close_feather") {
-								$tahomaCmd->setType('action');
-								$tahomaCmd->setSubType('other');
-								$tahomaCmd->setDisplay('icon', '<i class="fa fa-arrow-down"></i>');
-								$tahomaCmd->setDisplay('generic_type', 'FLAP_DOWN');
-							} else if ($command->commandName == "my_feather") {
-								$tahomaCmd->setType('action');
-								$tahomaCmd->setSubType('other');
-								$tahomaCmd->setDisplay('icon', '<i class="fa fa-star-o"></i>');
-								$tahomaCmd->setDisplay('generic_type', 'FLAP_STOP');
-							}
+								$tahomaCmd->setIsVisible(0);
+								$tahomaCmd->setSubType('slider');
+								$tahomaCmd->setConfiguration('request', 'closure');
+								$tahomaCmd->setConfiguration('parameters', '#slider#,"lowspeed"');
+								$tahomaCmd->setConfiguration('minValue', '0');
+								$tahomaCmd->setConfiguration('maxValue', '100');
+								$tahomaCmd->setDisplay('generic_type', 'FLAP_SLIDER');
 						}
 
 						if ($module->controllableName == "rts:OnOffRTSComponent") {
@@ -516,7 +509,7 @@ class tahoma extends eqLogic {
 
 		foreach ($eqLogics as $eqLogic) {
 			// Recherche le module 'ActionGroups'
-			log::add('tahoma', 'debug', "eqlabel: " . $eqLogic->getConfiguration('deviceURL') . "type: " . $eqLogic->getConfiguration('type'));
+			log::add('tahoma', 'debug', "eqlabel: " . $eqLogic->getConfiguration('deviceURL') . " type: " . $eqLogic->getConfiguration('type'));
 
 			if ($eqLogic->getConfiguration('deviceURL') == "ActionGroups") {
 				$eqLogic_found = $eqLogic;
