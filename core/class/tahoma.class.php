@@ -516,7 +516,7 @@ class tahoma extends eqLogic {
 
 		foreach ($eqLogics as $eqLogic) {
 			// Recherche le module 'ActionGroups'
-			log::add('tahoma', 'debug', "eqlabel: " . $eqLogic->getConfiguration('deviceURL'));
+			log::add('tahoma', 'debug', "eqlabel: " . $eqLogic->getConfiguration('deviceURL') . $eqLogic->getConfiguration('type'));
 
 			if ($eqLogic->getConfiguration('deviceURL') == "ActionGroups") {
 				$eqLogic_found = $eqLogic;
