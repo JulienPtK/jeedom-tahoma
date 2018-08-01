@@ -234,6 +234,30 @@ class tahoma extends eqLogic {
 							// Store
 						}
 
+						if ($module->controllableName == "io:RollerShutterVeluxIOComponent") {
+							// Velux IO
+						}
+
+						if ($module->controllableName == "io:RollerShutterWithLowSpeedManagementIOComponent") {
+							// RS Confort with feather mode
+							if ($command->commandName == "open_feather") {
+								$tahomaCmd->setType('action');
+								$tahomaCmd->setSubType('other');
+								$tahomaCmd->setDisplay('icon', '<i class="fa fa-arrow-up"></i>');
+								$tahomaCmd->setDisplay('generic_type', 'FLAP_UP');
+							} else if ($command->commandName == "close_feather") {
+								$tahomaCmd->setType('action');
+								$tahomaCmd->setSubType('other');
+								$tahomaCmd->setDisplay('icon', '<i class="fa fa-arrow-down"></i>');
+								$tahomaCmd->setDisplay('generic_type', 'FLAP_DOWN');
+							} else if ($command->commandName == "my_feather") {
+								$tahomaCmd->setType('action');
+								$tahomaCmd->setSubType('other');
+								$tahomaCmd->setDisplay('icon', '<i class="fa fa-star-o"></i>');
+								$tahomaCmd->setDisplay('generic_type', 'FLAP_STOP');
+							}
+						}
+
 						if ($module->controllableName == "rts:OnOffRTSComponent") {
 							// Prise On-Off
 						}
@@ -317,11 +341,6 @@ class tahoma extends eqLogic {
 							$tahomaCmd->setType('action');
 							$tahomaCmd->setSubType('other');
 							$tahomaCmd->setDisplay('icon', '<i class="fa fa-exchange"></i>');
-						} else if ($command->commandName == "slow") {
-							$tahomaCmd->setType('action');
-							$tahomaCmd->setSubType('other');
-							$tahomaCmd->setDisplay('icon', '<i class="fa fa-star-o"></i>');
-							$tahomaCmd->setIsVisible(0);
 						} else {
 							$useCmd = false;
 						}
@@ -454,6 +473,18 @@ class tahoma extends eqLogic {
 						$command->save();
 					}
 					if ($command->getName() == 'my') {
+						$command->setDisplay('generic_type', 'FLAP_STOP');
+						$command->save();
+					}
+					if ($command->getName() == 'open_feather') {
+						$command->setDisplay('generic_type', 'FLAP_UP');
+						$command->save();
+					}
+					if ($command->getName() == 'close_feather') {
+						$command->setDisplay('generic_type', 'FLAP_DOWN');
+						$command->save();
+					}
+					if ($command->getName() == 'my_feather') {
 						$command->setDisplay('generic_type', 'FLAP_STOP');
 						$command->save();
 					}
