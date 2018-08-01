@@ -243,6 +243,7 @@ class tahoma extends eqLogic {
 						if ($module->controllableName == "io:RollerShutterWithLowSpeedManagementIOComponent") {
 							// RS Confort with feather mode
 							if ($command->commandName == "setClosureAndLinearSpeed") {
+								log::add('tahoma', 'debug', "Add Feather Command");
 								$tahomaCmd->setType('action');
 								$tahomaCmd->setIsVisible(0);
 								$tahomaCmd->setSubType('slider');
@@ -251,6 +252,7 @@ class tahoma extends eqLogic {
 								$tahomaCmd->setConfiguration('minValue', '0');
 								$tahomaCmd->setConfiguration('maxValue', '100');
 								$tahomaCmd->setDisplay('generic_type', 'FLAP_SLIDER');
+							}
 						}
 
 						if ($module->controllableName == "rts:OnOffRTSComponent") {
