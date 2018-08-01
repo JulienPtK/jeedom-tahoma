@@ -313,11 +313,15 @@ class tahoma extends eqLogic {
 							$tahomaCmd->setType('action');
 							$tahomaCmd->setSubType('other');
 							$tahomaCmd->setDisplay('icon', '<i class="fa fa-arrow-up"></i>');
-							$tahomaCmd->setIsVisible(0);
 						} else if ($command->commandName == "test") {
 							$tahomaCmd->setType('action');
 							$tahomaCmd->setSubType('other');
 							$tahomaCmd->setDisplay('icon', '<i class="fa fa-exchange"></i>');
+						} else if ($command->commandName == "slow") {
+							$tahomaCmd->setType('action');
+							$tahomaCmd->setSubType('other');
+							$tahomaCmd->setDisplay('icon', '<i class="fa fa-star-o"></i>');
+							$tahomaCmd->setIsVisible(0);
 						} else {
 							$useCmd = false;
 						}
