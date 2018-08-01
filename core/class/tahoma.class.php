@@ -230,6 +230,8 @@ class tahoma extends eqLogic {
 
 						$tahomaCmd = new tahomaCmd();
 
+						$useCmd = true;
+						
 						if ($module->controllableName == "io:RollerShutterGenericIOComponent") {
 							// Store
 						}
@@ -269,8 +271,6 @@ class tahoma extends eqLogic {
 						if ($module->controllableName == "rts:LightRTSComponent") {
 							// Lampe
 						}
-
-						$useCmd = true;
 
 						if ($command->commandName == "setClosure") {
 							$tahomaCmd->setType('action');
@@ -316,14 +316,14 @@ class tahoma extends eqLogic {
 							$tahomaCmd->setDisplay('icon', '<i class="fa fa-toggle-on"></i>');
 						} else if ($command->commandName == "alarmPartial1") {
  							//zone alarme 1
-                                                         $tahomaCmd->setType('action');
-                                                         $tahomaCmd->setSubType('other');
-                                                         $tahomaCmd->setDisplay('icon', '<i class="fa fa-toggle-on"></i>');
-                                               } else if ($command->commandName == "alarmPartial2") {
+							$tahomaCmd->setType('action');
+							$tahomaCmd->setSubType('other');
+							$tahomaCmd->setDisplay('icon', '<i class="fa fa-toggle-on"></i>');
+						} else if ($command->commandName == "alarmPartial2") {
  							//zone alarme 2
-                                                         $tahomaCmd->setType('action');
-                                                         $tahomaCmd->setSubType('other');
-                                                         $tahomaCmd->setDisplay('icon', '<i class="fa fa-toggle-on"></i>');                       
+							$tahomaCmd->setType('action');
+							$tahomaCmd->setSubType('other');
+							$tahomaCmd->setDisplay('icon', '<i class="fa fa-toggle-on"></i>');                       
 						} else if ($command->commandName == "off") {
 							$tahomaCmd->setType('action');
 							$tahomaCmd->setSubType('other');
@@ -516,7 +516,7 @@ class tahoma extends eqLogic {
 
 		foreach ($eqLogics as $eqLogic) {
 			// Recherche le module 'ActionGroups'
-			log::add('tahoma', 'debug', "eqlabel: " . $eqLogic->getConfiguration('deviceURL') . $eqLogic->getConfiguration('type'));
+			log::add('tahoma', 'debug', "eqlabel: " . $eqLogic->getConfiguration('deviceURL') . "type: " . $eqLogic->getConfiguration('type'));
 
 			if ($eqLogic->getConfiguration('deviceURL') == "ActionGroups") {
 				$eqLogic_found = $eqLogic;
